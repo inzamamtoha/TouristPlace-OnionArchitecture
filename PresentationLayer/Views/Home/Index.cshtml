@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebLayer.Models.PlaceViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id='init'>
+    <form id="searchForm" asp-action="Index" asp-controller="Home" method="get">
+        <input name='SearchKey' value="@ViewBag.Search" class="input-group-sm" />
+        <input name='SelectKey' value="@ViewBag.Select" type="hidden" />
+        <button type='submit' class="btn btn-default">search</button>
+    </form>
+    <p><button type='button' id='createBtn' class="btn btn-default" onclick="location.href='@Url.Action("Create", "Home")'">Create New Tourist Place</button></p>
+
+    <form id="selectForm" asp-action="Index" asp-controller="Home" method="get">
+        <input name='SearchKey' value="@ViewBag.Search" type="hidden" />
+        Sort on Rating Column By :
+        <select id='mySelect' name="SelectKey" onchange="this.form.submit()">
+            <option value='none'>NONE</option>
+            <option value='asc'>ASC</option>
+            <option value='desc'>DESC</option>
+        </select>
+    </form>
+</div>
+
+<div id='table'>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Picture)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+
+                        <img src="@Url.Content(item.Picture)" alt="image" style="margin-right : -100px; width :200px;" />
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id">Update</a>
+                        <a asp-action="DeleteConfirmed" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to Delete?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+ document.getElementById("mySelect").value = "@ViewBag.Select";
+</script>

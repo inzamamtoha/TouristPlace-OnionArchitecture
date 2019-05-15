@@ -1,0 +1,28 @@
+@model IEnumerable<WebLayer.Models.CountryViewModel>
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div id='add'>
+    <h2>Add a new Tourist Place</h2>
+
+    <form id='addForm' method="post" asp-action="Create" enctype="multipart/form-data">
+        <p>Name : <input type='text' name='Name' placeholder='Enter the place name' class="form-control" required></p>
+        <p>Address: <input type='text' name='Address' placeholder='Enter the place address' class="form-control" required></p>
+        <p>Rating: <input type='number' name='Rating' value='' placeholder='Rate the place' min='1' max='5' class="form-control" required></p>
+        <p>Picture: <input type='file' name='Picture' id='loadImage' class="form-control" required></p>
+        <p>
+            Country: <select name="CountryId" class="form-control" required>
+                @foreach (var item in Model)
+                {
+                    <option value="@item.Id"> @Html.DisplayFor(modelItem => item.Name)</option>
+                }
+            </select>
+        </p>
+        <button type='submit' id='submitBtn' class="btn btn-default">Submit</button>
+        <button type='reset' class="btn btn-default">Reset</button><br>
+    </form>
+
+    <br>
+    <a asp-area="" asp-controller="Home" asp-action="Index" id='backA'>Back to Tourist Place List</a>
+</div>

@@ -1,0 +1,37 @@
+@model WebLayer.Models.PlaceViewModel
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div id='update'>
+    <h2>Update the Tourist Place</h2>
+
+    <form id='updateForm' method="post" asp-action="Update" enctype="multipart/form-data">
+        <p>Name: <input type='text' name='Name' value='@Html.DisplayFor(model => model.Name)' class="form-control" placeholder='Enter the place name' required /></p>
+        <p>Address: <input type='text' name='Address' value='@Html.DisplayFor(model => model.Address)' class="form-control" placeholder='Enter the place address' required /></p>
+        <p>Rating: <input type='number' min='1' max='5' name='Rating' value='@Html.DisplayFor(model => model.Rating)' class="form-control" placeholder='Rate the palace' required /></p>
+        <p>Picture: <input type='file' name='Picture' id='loadUpdateImage' class="form-control" /></p>
+        <input type="hidden" name="PicPath" value='@Html.DisplayFor(model => model.Picture)' />
+        <p>
+            Country: <select name="CountryId" class="form-control" required>
+                @foreach (var item in ViewData["Country"] as IEnumerable<WebLayer.Models.CountryViewModel>)
+                {
+                    @if (Model.Country == @item.Name)
+                    {
+                        <option value="@item.Id" selected> @item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id"> @item.Name</option>
+                    }
+
+                }
+            </select>
+        <p><button type='submit' value='' id='submitUpdateBtn' class="btn btn-default">Update</button><br></p>
+    </form>
+
+    <br>
+    <a asp-area="" asp-controller="Home" asp-action="Index" id='backU'>Back to Tourist Place List</a>
+</div>
+
